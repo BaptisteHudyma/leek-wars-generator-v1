@@ -1,68 +1,74 @@
 package com.leekwars;
 
+import java.util.List;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 import com.alibaba.fastjson.JSON;
-import com.leekwars.generator.DbContext;
-import com.leekwars.generator.DbResolver;
-import com.leekwars.generator.Generator;
 import com.leekwars.generator.Log;
-import com.leekwars.generator.outcome.Outcome;
-import com.leekwars.generator.scenario.Scenario;
-
-import leekscript.compiler.LeekScript;
-import leekscript.compiler.IACompiler.AnalyzeResult;
+import com.leekwars.generator.genetics.Genetic;
+import com.leekwars.generator.genetics.Parseur;
 
 public class Main {
+    private static final String TAG = Main.class.getSimpleName();
 
-	private static final String TAG = Main.class.getSimpleName();
-
-	public static void main(String[] args) {
-		String file = null;
-		boolean nocache = false;
-		boolean db_resolver = false;
-		boolean verbose = false;
-		boolean analyze = false;
-		int farmer = 0;
+    public static void main(String[] args) {
+        boolean verbose = false;
+        int iterations = Integer.parseInt(System.getProperty("i")); //iterations
+        int populationSize = Integer.parseInt(System.getProperty("p")); //iterations
+        String file = System.getProperty("c");                      //coefficients file
+        String scenario = "test/scenario"; //System.getProperty("s");                  //scenario
+        String iaFolder = "test";//System.getProperty("f");                  //ia folder
 
 		for (String arg : args) {
 			if (arg.startsWith("--")) {
 				switch (arg.substring(2)) {
-					case "nocache": nocache = true; break;
-					case "dbresolver": db_resolver = true; break;
 					case "verbose": verbose = true; break;
-					case "analyze": analyze = true; break;
 				}
-				if (arg.startsWith("--farmer=")) {
-					farmer = Integer.parseInt(arg.substring("--farmer=".length()));
-				}
-			} else {
-				file = arg;
 			}
 		}
-		Log.enable(verbose);
-		Log.i(TAG, "Generator v1");
-		if (file == null) {
-			Log.i(TAG, "No scenario/ai file passed!");
-			return;
-		}
-		if (db_resolver) {
-			DbResolver dbResolver = new DbResolver("../resolver.php");
-			LeekScript.setResolver(dbResolver);
-		}
-		Generator generator = new Generator();
-		generator.setNocache(nocache);
-		if (analyze) {
-			AnalyzeResult result = generator.analyzeAI(file, new DbContext(farmer, 0));
-			System.out.println(result.informations);
-		} else {
-			Scenario scenario = Scenario.fromFile(new File(file));
-			if (scenario == null) {
-				Log.e(TAG, "Failed to parse scenario!");
-				return;
-			}
-			Outcome outcome = generator.runScenario(scenario, null);
-			System.out.println(JSON.toJSONString(outcome.toJson(), false));
-		}
-	}
+        Log.enable(verbose);
+
+        System.out.println(iaFolder);
+
+        //copy ia to destination folder
+        String destination = ".tmp";
+        try {
+            File f = new File(destination);
+            if (!f.exists()) 
+                f.mkdir();
+            copyFolder(new File(iaFolder), new File(destination + "/test"));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(destination + "/" + file);
+        Parseur p = new Parseur(destination + "/" + file);
+        Genetic gen = new Genetic(scenario, p, iterations, populationSize, verbose);
+
+        //System.out.print(JSON.toJSONString(gen.fight(file, true), false));
+    }
+
+
+    public static void copyFolder(File source, File dest) throws IOException {
+        if (source.isDirectory()) {
+            if (!dest.exists()) {
+                dest.mkdir();
+            }
+            for (String f: source.list()) {
+                File srcFile = new File(source, f);
+                File destFile = new File(dest, f);
+                
+                copyFolder(srcFile, destFile);
+            }
+        }
+        else {
+            Files.copy(source.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        }
+    }
 }
+
+

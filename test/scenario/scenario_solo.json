@@ -1,0 +1,68 @@
+{	"farmers": [
+		{	"id": 1,
+			"name": "RussianMafia",
+			"country": "fr"
+		},
+		{	"id": 2,
+			"name": "BaptouSolide",
+			"country": "fr"
+		}
+	],
+	"teams": [
+		{	"id": 1,
+			"name": "DoT"
+		},
+		{	"id": 2,
+			"name": "Polytech"
+		}
+	],
+	"entities": [
+		[
+			{	"id": 12,
+				"ai": ".tmp/test/ai/spria/main.leek",
+				"name": "ArkrandrBieva",
+				"type": 1,
+				"farmer": 1,
+				"team": 1,
+				"level": 301,
+				"life": 1700,
+				"strength": 500,
+				"tp": 21,
+				"mp": 8,
+                "wisdom": 200,
+                "resistance": 300,
+				"weapons": [43, 47, 107, 44],
+				"chips": [30, 32, 31, 36, 85, 33, 105, 11, 67, 35, 80, 20, 23, 22, 24, 29]
+			}
+		],
+		[
+			{	"id": 59,
+				"ai": "test/ai/spria/main.leek",
+				"name": "BaptouSolide",
+				"type": 1,
+				"farmer": 2,
+                "team": 2,
+				"level": 301,
+				"life": 1700,
+				"strength": 500,
+				"tp": 21,
+				"mp": 8,
+                "wisdom": 200,
+                "resistance": 300,
+				"weapons": [43, 47, 107, 44],
+				"chips": [30, 32, 31, 36, 85, 33, 105, 11, 67, 35, 80, 20, 23, 22, 24, 29]
+			}
+        ]
+	],
+	"map": {
+		"width": 17,
+		"height": 17,
+		"type": 3,
+		"obstacles": [
+			23, 40, 41, 58, 105, 95, 97, 132, 140, 135, 157, 177, 162, 179, 180, 194, 195, 196, 197, 223, 243, 211, 228, 233, 245, 246, 263, 250, 251, 254, 258, 268, 269, 270, 271, 272, 273, 274, 275, 276, 300, 302, 304, 307, 308, 309, 334, 335, 343, 352, 362, 364, 387, 392, 393, 397, 404, 405, 410, 413, 419, 422, 430, 432, 438, 446, 449, 450, 458, 460, 462, 463, 464, 467, 475, 476, 479, 480, 481, 489
+		]
+	},
+	"random_seed": 1234567,
+	"max_turns": 64,
+	"max_operations_per_entity": 20000000
+}

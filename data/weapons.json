@@ -555,7 +555,7 @@
     },
     "119":{
         "id":119,
-        "name":"b_laser",
+        "name":"revoker_b_laser",
         "level":170,
         "min_range":2,
         "max_range":8,
