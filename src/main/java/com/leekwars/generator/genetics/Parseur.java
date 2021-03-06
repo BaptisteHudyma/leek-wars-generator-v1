@@ -20,7 +20,8 @@ public class Parseur {
 
     private List<Double> coefficients;
     private List<String> lines;
-    private static Pattern pattern = Pattern.compile("\\d+(\\.\\d+)?");
+    //match a number. Can be have a - and a decimal place
+    private static Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 
     public Parseur (String fileToParse) {
         lines = parse_file(fileToParse);
