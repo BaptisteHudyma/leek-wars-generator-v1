@@ -1,6 +1,9 @@
-/bin/
-/logs/
-/ai/
+best_score.leek
+res.txt
+.*
+test
+logs/
+ai/
 leekscript.jar
 generator.jar
 .gradle/
