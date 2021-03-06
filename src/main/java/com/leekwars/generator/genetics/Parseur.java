@@ -20,7 +20,7 @@ public class Parseur {
 
     private List<Double> coefficients;
     private List<String> lines;
-    private static Pattern pattern = Pattern.compile("\\d+(\\D\\d+)?");
+    private static Pattern pattern = Pattern.compile("\\d+(\\.\\d+)?");
 
     public Parseur (String fileToParse) {
         lines = parse_file(fileToParse);
@@ -79,8 +79,13 @@ public class Parseur {
             Matcher matcher = pattern.matcher(line);
             //for each line, get doubles
             while (matcher.find()) {
-                double coeff = Double.parseDouble(line.substring(matcher.start(), matcher.end()));
-                coeffs.add(coeff);
+                try {
+                    double coeff = Double.parseDouble(line.substring(matcher.start(), matcher.end()));
+                    coeffs.add(coeff);
+                }
+                catch (NumberFormatException e) {
+                    continue;   //could not parse this double
+                }
             }
         }
         return coeffs;

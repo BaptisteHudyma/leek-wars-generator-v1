@@ -29,7 +29,7 @@ gradle jar
 ```
 
 ## AI Training task
-Will train the file "scores.leek" for 100 iterations with a genetic pop of 100 with the all the scenarios in test/scenario/
+Will train the file "scores.leek" for 100 iterations with a genetic pop of 10 with the all the scenarios in test/scenario/
 ```
 java -Di="100" -Dp="10" -Dc=test/ai/myProg/scores.leek -jar generator.ja
 ```
