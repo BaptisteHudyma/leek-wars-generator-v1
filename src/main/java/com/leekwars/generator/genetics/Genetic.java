@@ -103,10 +103,10 @@ public class Genetic {
 
         //print chromosomes
         /*
-        for (Chromosome c: newPop) {
-            System.out.println(c.toString());
-        }
-        */
+           for (Chromosome c: newPop) {
+           System.out.println(c.toString());
+           }
+         */
 
         //evaluate the mean score of the new pop against the best of last pop
         System.out.println("\rIteration " + iteration + " max score: " + ref.score + " mean score: " + mean/(double)newPop.size() + "\n");
@@ -155,6 +155,9 @@ public class Genetic {
         //remove compiled ais 
         String ais = "ai";  //compiled ais
         File index = new File(ais);
+        if(! index.exists()) {
+            index.mkdir();
+        }
         for (String str: index.list()) {
             File f = new File(index.getPath(), str);
             if (! f.delete()) 
